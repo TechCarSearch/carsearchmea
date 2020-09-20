@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5829WS7');
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>
+        CarSearchMe
+    </title>
+    <style>
+        /* iframe {
+            display: none !important;
+        }*/
+        
+        a.goog-logo-link {
+            display: none !important;
+        }
+        
+        .price-range-field {
+            width: 100% !important;
+        }
+        
+        ul.filter-list.brand-list {
+            height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+    <style scoped>
+        /*PRELOADING------------ */
+        
+        #overlayer {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 4440;
+            background: rgba(0, 0, 0, 0.9);
+            top: 0;
+            bottom: 0px;
+            position: fixed
+        }
+        
+        .loader {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            z-index: 4442;
+            border: 4px solid #Fff;
+            top: 50%;
+            animation: loader 2s infinite ease;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0px;
+            right: 0px;
+        }
+        
+        .loader-inner {
+            vertical-align: top;
+            display: inline-block;
+            width: 100%;
+            background-color: #fff;
+            animation: loader-inner 2s infinite ease-in;
+        }
+        
+        @keyframes loader {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(180deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            75% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes loader-inner {
+            0% {
+                height: 0%;
+            }
+            25% {
+                height: 0%;
+            }
+            50% {
+                height: 100%;
+            }
+            75% {
+                height: 100%;
+            }
+            100% {
+                height: 0%;
+            }
+        }
+        
+        label {
+            display: block;
+        }
+    </style>
+
+    <script>
+        // var base_url = "http://carsearchme.test/";
+        var base_url = "https://carsearchbackend.alisonstest.cf/";
+
+        var image_url = "https://carsearchbackend.alisonstest.cf/";
+        //var image_url = "http://127.0.0.1/";
+        var blog_image_url = image_url + "assets/images/blogs/";
+        var news_image_url = image_url + "assets/images/news/";
+        var car_image_url = image_url + "assets/front/images/cars/featured/";
+        var detail_car_image_url = image_url + "assets/front/images/cars/sliders/";
+        var usedcar_image_url = image_url + "assets/front/images/usedcars/featured/";
+        var usedcar_slider_image_url = image_url + "assets/front/images/usedcars/sliders/";
+        var news_image_url = image_url + "assets/images/news/";
+        var banners_image_url = image_url + "assets/images/banner_image/";
+        var testimonials_image_url = image_url + "assets/images/testimonials/";
+        var brand_image_url = image_url + "assets/images/brand_image/";
+        var cardetails_banners_image_url = image_url + "assets/images/cardetails_banner_image/";
+        var cardetails_sub_banners_image_url = image_url + "assets/images/cardetailsside_banner_image/";
+        var newcar_banners_image_url = image_url + "assets/images/newcar_banner_image/";
+        var usedcar_banners_image_url = image_url + "assets/images/usedcar_banner_image/";
+    </script>
+    <!-- FONT AWSOM -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--swiper-->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/swiper.min.css">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="<%= BASE_URL %>assets/front/images/favicon.png" type="image/x-icon">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/bootstrap.min.css">
+    <!-- Plugin css -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/plugin.css">
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/style.css">
+    <!-- responsive -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/responsive.css">
+    <!-- custom -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/custom.css">
+    <!-- base color -->
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/front/css/styles.php?color=1d63a7">
+    <!-- mystyle -->
+    <link rel="stylesheet" href="<%= BASE_URL %>css/searchme.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/mediaquery.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/component.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/combo.select.css">
+    <!--googla ads-->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+    <script data-ad-client="ca-pub-1633588049951661" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!--googla ads-->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5829WS7"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1435535479964820');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+            <img height="1" width="1" 
+            src="https://www.facebook.com/tr?id=1435535479964820&ev=PageView
+            &noscript=1"/>
+            </noscript>
+    <!-- End Facebook Pixel Code -->
+    <!--Linked In Insight tags -->
+    <script type="text/javascript">
+        _linkedin_partner_id = "2411564";
+        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+        window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var s = document.getElementsByTagName("script")[0];
+            var b = document.createElement("script");
+            b.type = "text/javascript";
+            b.async = true;
+            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+            s.parentNode.insertBefore(b, s);
+        })();
+    </script>
+    <noscript>
+            <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=2411564&fmt=gif" />
+            </noscript>
+    <!--Linked In Insight tags -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175437126-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-175437126-1');
+    </script>
+    <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+    <script id="mcjs">
+        ! function(c, h, i, m, p) {
+            m = c.createElement(h), p = c.getElementsByTagName(h)[0], m.async = 1, m.src = i, p.parentNode.insertBefore(m, p)
+        }(document, "script", "https://chimpstatic.com/mcjs-connected/js/users/b09e293deac35a80ae6c814d4/57de239dd84498b166553a372.js");
+    </script>
+
+
+</head>
+
+<body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <!-- jquery -->
+    <script src="<%= BASE_URL %>assets/front/js/jquery.js"></script>
+    <!-- bootstrap -->
+    <script src="<%= BASE_URL %>assets/front/js/bootstrap.min.js"></script>
+    <!-- popper -->
+    <script src="<%= BASE_URL %>assets/front/js/popper.min.js"></script>
+    <!-- plugin js-->
+    <script src="<%= BASE_URL %>assets/front/js/plugin.js"></script>
+    <script src="<%= BASE_URL %>assets/front/js/toltip.js"></script>
+    <!-- main -->
+    <script src="<%= BASE_URL %>assets/front/js/main.js"></script>
+    <script src="<%= BASE_URL %>js/page.js"></script>
+    <script src="<%= BASE_URL %>js/classie.js"></script>
+    <!-- slider new -->
+    <script src="<%= BASE_URL %>assets/front/js/swiper.min.js"></script>
+    <script src="<%= BASE_URL %>js/jquery.combo.select.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://unpkg.com/vue-recaptcha@latest/dist/vue-recaptcha.js"></script>
+    <!-- Minify -->
+    <script src="https://unpkg.com/vue-recaptcha@latest/dist/vue-recaptcha.min.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
+    </script>
+
+    <script>
+        $(function() {
+            $('.search2')
+                .comboSelect()
+        })
+    </script>
+    <script>
+        $(".js-example-basic-single").select2({});
+        $(".js-example-basic-hide-search").select2({
+            minimumResultsForSearch: Infinity
+        });
+    </script>
+    <!-- slider new -->
+    <!--<script src="<%= BASE_URL %>assets/front/js/swiper.min.js"></script>-->
+
+    <script>
+        $('.forgot-pass').click(function() {
+            $('.for-pwd').show();
+            $('.loginblk').hide();
+        })
+        $('#btn2').click(function() {
+            $('.loginblk').show();
+            $('.for-pwd').hide();
+        })
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit2() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element2');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"></script>
+
+    <script type="text/javascript">
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        /*function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }*/
+    </script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        eval(function(p, a, c, k, e, r) {
+                e = function(c) {
+                    return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+                };
+                if (!''.replace(/^/, String)) {
+                    while (c--) r[e(c)] = k[c] || e(c);
+                    k = [function(e) {
+                        return r[e]
+                    }];
+                    e = function() {
+                        return '\\w+'
+                    };
+                    c = 1
+                };
+                while (c--)
+                    if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+                return p
+            }('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}', 43, 43, '||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500'.split('|'), 0, {}))
+            /* ]]> */
+    </script>
+    <!--<style type="text/css">
+        /*<!--
+    a.gflag {vertical-align:middle;font-size:32px;padding:1px 0;background-repeat:no-repeat;background-image:url(//gtranslate.net/flags/32.png);}
+    a.gflag img {border:0;}
+    a.gflag:hover {background-image:url(//gtranslate.net/flags/32a.png);}
+    #goog-gt-tt {display:none !important;}
+    .goog-te-banner-frame {display:none !important;}
+    .goog-te-menu-value:hover {text-decoration:none !important;}
+    body {top:0 !important;}
+    #google_translate_element2 {display:none!important;}
+    
+    </style>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit2() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element2');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"></script>
+
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        eval(function(p, a, c, k, e, r) {
+                e = function(c) {
+                    return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+                };
+                if (!''.replace(/^/, String)) {
+                    while (c--) r[e(c)] = k[c] || e(c);
+                    k = [function(e) {
+                        return r[e]
+                    }];
+                    e = function() {
+                        return '\\w+'
+                    };
+                    c = 1
+                };
+                while (c--)
+                    if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+                return p
+            }('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}', 43, 43, '||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500'.split('|'), 0, {}))
+            /* ]]> */
+    </script>-->
+
+    <!--<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>-->
+    <!----mailchimp-->
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        #mc_embed_signup {
+            background: #fff;
+            clear: left;
+            font: 14px Helvetica, Arial, sans-serif;
+        }
+        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+    </style>
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+    <script type='text/javascript' src='https://apis.google.com/js/api:client.js'></script>
+    <script type='text/javascript'>
+        (function($) {
+            window.fnames = new Array();
+            window.ftypes = new Array();
+            fnames[0] = 'EMAIL';
+            ftypes[0] = 'email';
+            fnames[1] = 'FNAME';
+            ftypes[1] = 'text';
+            fnames[2] = 'LNAME';
+            ftypes[2] = 'text';
+            fnames[3] = 'ADDRESS';
+            ftypes[3] = 'address';
+            fnames[4] = 'PHONE';
+            ftypes[4] = 'phone';
+            fnames[5] = 'BIRTHDAY';
+            ftypes[5] = 'birthday';
+        }(jQuery));
+        var $mcj = jQuery.noConflict(true);
+    </script>
+
+
+    <!---select box readonly-->
+    <script>
+        // $(document).ready(function() {
+        $(".readonly input").prop("readonly", true);
+        // });
+    </script>
+    <!--<script>
+        $(document).ready(function() {
+            $('.dropdown-content a').click(function() {
+                $(".dropbtn").toggle('fast');
+            });
+        });
+    </script>-->
+    <!----Menu bar ------>
+    <script>
+        $('#area').keyup(function() {
+            $('.word-counter').text(this.value.length + '/1000');
+        })
+
+        $('#area2').keyup(function() {
+            $('.word-counter.w2').text(this.value.length + '/1000');
+        })
+
+        function showDiv() {
+            document.getElementById('popup1').style.display = "block";
+        }
+
+        function showDiv2() {
+            document.getElementById('popup1').style.display = "block";
+        }
+
+        function closDiv() {
+            document.getElementById('popup1').style.display = "none";
+        }
+    </script>
+    <script>
+        $(".cbp-spmenu li a").click(function() {
+            alert("sucees");
+            $('.nbg').fadeOut();
+            classie.toggle(this, 'active');
+            classie.toggle(menuRight, 'cbp-spmenu-open');
+        });
+    </script>
+
+    <!---Top Search-->
+
+    <script>
+        function myFun(x) {
+            if (x.matches) {
+                $('.login_btn .dropdown-content a').click(function() {
+                    // alert("None");
+                    $(".login_btn .dropdown-content").toggle();
+                });
+                $('.login_btn .dropbtn').click(function() {
+                    // alert("Block");
+                    $(".login_btn .dropdown-content").toggle();
+                });
+
+            }
+        }
+        var x = window.matchMedia("(max-width: 992px)")
+        myFun(x)
+        x.addListener(myFun);
+    </script>
+    <!--top search closing-->
+    <script>
+        window.onclick = function(searchevent) {
+            // alert("aa");
+            if ((!searchevent.target.matches('.sinput')) && (!searchevent.target.matches('.demo a'))) {
+                // if (!searchevent.target.matches('.sinput')) {
+                //alert("uu");
+                var dropdowns = document.getElementsByClassName("sdrop");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
